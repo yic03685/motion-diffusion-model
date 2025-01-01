@@ -92,10 +92,11 @@ def plot_3d_motion(save_path, kinematic_tree, joints, title, dataset, figsize=(3
 
     def update(index):
         #         print(index)
-        ax._lines = []
-        ax._collections = []
+        # ax._lines = []
+        ax.clear()
+        # ax.collections = []
         ax.view_init(elev=120, azim=-90)
-        ax._dist = 7.5
+        ax.dist = 7.5
         #         ax =
         plot_xzPlane(MINS[0] - trajec[index, 0], MAXS[0] - trajec[index, 0], 0, MINS[2] - trajec[index, 1],
                      MAXS[2] - trajec[index, 1])
@@ -115,7 +116,6 @@ def plot_3d_motion(save_path, kinematic_tree, joints, title, dataset, figsize=(3
                 linewidth = 2.0
             ax.plot3D(data[index, chain, 0], data[index, chain, 1], data[index, chain, 2], linewidth=linewidth,
                       color=color)
-        #         print(trajec[:index, 0].shape)
 
         plt.axis('off')
         ax.set_xticklabels([])
