@@ -1,0 +1,4 @@
+smplx
+scipy
+matplotlib
+chumpy
