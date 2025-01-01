@@ -1,4 +1,6 @@
-smplx
-scipy
-matplotlib
-chumpy
+smplx==0.1.28
+scipy==1.14.1
+matplotlib==3.10.0
+chumpy==0.70
+trimesh==4.5.3
+h5py==3.12.1
