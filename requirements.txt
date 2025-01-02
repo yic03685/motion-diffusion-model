@@ -1,5 +1,5 @@
 smplx==0.1.28
 scipy==1.14.1
-chumpy==0.70
+chumpy @ git+https://github.com/mattloper/chumpy@9b045ff5d6588a24a0bab52c83f032e2ba433e17
 trimesh==4.5.3
 h5py==3.12.1
