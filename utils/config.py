@@ -1,6 +1,11 @@
 import os
 
-SMPL_DATA_PATH = "./body_models/smpl"
+# Get the path of the script that is being executed
+current_dir = os.getcwd()
+
+REPO_PATH = f"{current_dir}/motion-diffusion-model"
+DATASET_PATH = f"{REPO_PATH}/dataset"
+SMPL_DATA_PATH = f"{REPO_PATH}/body_models/smpl"
 
 SMPL_KINTREE_PATH = os.path.join(SMPL_DATA_PATH, "kintree_table.pkl")
 SMPL_MODEL_PATH = os.path.join(SMPL_DATA_PATH, "SMPL_NEUTRAL.pkl")

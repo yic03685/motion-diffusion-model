@@ -2,21 +2,25 @@ from argparse import ArgumentParser
 import argparse
 import os
 import json
+from typing import Any, Dict
 
-
-def parse_and_load_from_model(parser):
+def parse_and_load_from_model(parser, program_args = {}):
     # args according to the loaded model
     # do not try to specify them from cmd line since they will be overwritten
     add_data_options(parser)
     add_model_options(parser)
     add_diffusion_options(parser)
+    # This to consolidate both args coming from command lines or program provided
+    parser.set_defaults(**program_args)
     args = parser.parse_args()
+    
     args_to_overwrite = []
     for group_name in ['dataset', 'model', 'diffusion']:
         args_to_overwrite += get_args_per_group_name(parser, args, group_name)
 
     # load args from model
-    model_path = get_model_path_from_args()
+    # model_path = get_model_path_from_args()
+    model_path = args.model_path
     args_path = os.path.join(os.path.dirname(model_path), 'args.json')
     assert os.path.exists(args_path), 'Arguments json file was not found!'
     with open(args_path, 'r') as fr:
@@ -140,7 +144,7 @@ def add_training_options(parser):
 
 def add_sampling_options(parser):
     group = parser.add_argument_group('sampling')
-    group.add_argument("--model_path", required=True, type=str,
+    group.add_argument("--model_path", required=False, type=str,
                        help="Path to model####.pt file to be sampled.")
     group.add_argument("--output_dir", default='', type=str,
                        help="Path to results dir (auto created by the script). "
@@ -221,13 +225,13 @@ def train_args():
     return parser.parse_args()
 
 
-def generate_args():
+def generate_args(program_args: Dict[str, Any]):
     parser = ArgumentParser()
     # args specified by the user: (all other will be loaded from the model)
     add_base_options(parser)
     add_sampling_options(parser)
     add_generate_options(parser)
-    args = parse_and_load_from_model(parser)
+    args = parse_and_load_from_model(parser, program_args)
     cond_mode = get_cond_mode(args)
 
     if (args.input_text or args.text_prompt) and cond_mode != 'text':

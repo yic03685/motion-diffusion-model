@@ -7,6 +7,7 @@ import random
 import codecs as cs
 from tqdm import tqdm
 import spacy
+from utils.config import DATASET_PATH, REPO_PATH
 
 from torch.utils.data._utils.collate import default_collate
 from data_loaders.humanml.utils.word_vectorizer import WordVectorizer
@@ -719,14 +720,14 @@ class TextOnlyDataset(data.Dataset):
 
 # A wrapper class for t2m original dataset for MDM purposes
 class HumanML3D(data.Dataset):
-    def __init__(self, mode, datapath='./dataset/humanml_opt.txt', split="train", **kwargs):
+    def __init__(self, mode, datapath=f'{DATASET_PATH}/humanml_opt.txt', split="train", **kwargs):
         self.mode = mode
         
         self.dataset_name = 't2m'
         self.dataname = 't2m'
 
         # Configurations of T2M dataset and KIT dataset is almost the same
-        abs_base_path = f'.'
+        abs_base_path = REPO_PATH
         dataset_opt_path = pjoin(abs_base_path, datapath)
         device = None  # torch.device('cuda:4') # This param is not in use in this context
         opt = get_opt(dataset_opt_path, device)
@@ -737,7 +738,7 @@ class HumanML3D(data.Dataset):
         opt.checkpoints_dir = pjoin(abs_base_path, opt.checkpoints_dir)
         opt.data_root = pjoin(abs_base_path, opt.data_root)
         opt.save_root = pjoin(abs_base_path, opt.save_root)
-        opt.meta_dir = './dataset'
+        opt.meta_dir = DATASET_PATH
         self.opt = opt
         print('Loading dataset %s ...' % opt.dataset_name)
 
