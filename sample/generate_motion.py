@@ -3,7 +3,6 @@
 Generate a large batch of image samples from a model and save them as a large
 numpy array. This can be used to produce samples for FID evaluation.
 """
-from argparse import ArgumentParser
 from utils.fixseed import fixseed
 import os
 import numpy as np
@@ -18,6 +17,7 @@ import data_loaders.humanml.utils.paramUtil as paramUtil
 from data_loaders.humanml.utils.plot_script import plot_3d_motion
 import shutil
 from data_loaders.tensors import collate
+from Common.system.motion_file import Motion, MotionFile
 
 
 def generate_motion(promgram_args = {}):
@@ -162,9 +162,12 @@ def generate_motion(promgram_args = {}):
 
     npy_path = os.path.join(out_path, 'results.npy')
     print(f"saving results file to [{npy_path}]")
-    np.save(npy_path,
-            {'motion': all_motions, 'text': all_text, 'lengths': all_lengths,
+    motion_file = MotionFile(npy_path).set_data({'motion': all_motions, 'text': all_text, 'lengths': all_lengths,
              'num_samples': args.num_samples, 'num_repetitions': args.num_repetitions})
+    motion_file.save()
+    # np.save(npy_path,
+    #         {'motion': all_motions, 'text': all_text, 'lengths': all_lengths,
+    #          'num_samples': args.num_samples, 'num_repetitions': args.num_repetitions})
     with open(npy_path.replace('.npy', '.txt'), 'w') as fw:
         fw.write('\n'.join(all_text))
     with open(npy_path.replace('.npy', '_len.txt'), 'w') as fw:
