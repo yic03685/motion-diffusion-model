@@ -1,4 +1,11 @@
+import os
 import numpy as np
+
+# Get the path of the script that is being executed
+current_dir = os.getcwd()
+
+REPO_PATH = f"{current_dir}/motion-diffusion-model"
+
 
 # Map joints Name to SMPL joints idx
 JOINT_MAP = {
@@ -33,8 +40,8 @@ amass_idx =       range(22)
 amass_smpl_idx =  range(22)
 
 
-SMPL_MODEL_DIR = "./body_models/"
-GMM_MODEL_DIR = "./visualize/joints2smpl/smpl_models/"
-SMPL_MEAN_FILE = "./visualize/joints2smpl/smpl_models/neutral_smpl_mean_params.h5"
+SMPL_MODEL_DIR = f"{REPO_PATH}/body_models/"
+GMM_MODEL_DIR = f"{REPO_PATH}/visualize/joints2smpl/smpl_models/"
+SMPL_MEAN_FILE = f"{REPO_PATH}/visualize/joints2smpl/smpl_models/neutral_smpl_mean_params.h5"
 # for collsion 
-Part_Seg_DIR = "./visualize/joints2smpl/smpl_models/smplx_parts_segm.pkl"
+Part_Seg_DIR = f"{REPO_PATH}/visualize/joints2smpl/smpl_models/smplx_parts_segm.pkl"
